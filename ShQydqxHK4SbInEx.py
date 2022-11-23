@@ -1,134 +1,81 @@
-#!/usr/bin/env python
-# coding: utf-8
-
+# %% [markdown]
 # # Import Dataset
 
-# In[663]:
-
-
+# %%
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-# In[664]:
-
-
+# %%
 df = pd.read_csv("./term-deposit-marketing-2020.csv")
 
-
+# %% [markdown]
 # # Exploratory Data Analysis
 
-# In[665]:
-
-
+# %%
 df.shape
 
-
-# In[666]:
-
-
+# %%
 df.dtypes
 
-
-# In[667]:
-
-
+# %%
 df.head(10)
 
-
-# In[668]:
-
-
+# %%
 df.tail(10)
 
-
-# In[669]:
-
-
+# %%
 df.info()
 
-
-# In[670]:
-
-
+# %%
 df.describe()
 
-
-# In[671]:
-
-
+# %%
 df["age"].isnull().unique()
 df["balance"].isnull().unique()
 
-
+# %% [markdown]
 # We can see that there is no missing values as all columns have 40,000 data each.
 # <br>In addition, the five integer columns above have all integer data only.</br>
 
+# %% [markdown]
 # ### Browsing non-integer columns
 
-# In[672]:
-
-
+# %%
 df["job"].value_counts()
 
-
-# In[673]:
-
-
+# %%
 df["marital"].value_counts()
 
-
-# In[674]:
-
-
+# %%
 df["education"].value_counts()
 
-
-# In[675]:
-
-
+# %%
 df["default"].value_counts()
 
-
-# In[676]:
-
-
+# %%
 df["housing"].value_counts()
 
-
-# In[677]:
-
-
+# %%
 df["loan"].value_counts()
 
-
-# In[678]:
-
-
+# %%
 df["contact"].value_counts()
 
-
-# In[679]:
-
-
+# %%
 df["month"].value_counts()
 
-
+# %% [markdown]
 # September doesn't exists.
 
-# In[680]:
-
-
+# %%
 df["y"].value_counts()
 
-
+# %% [markdown]
 # # Data Visualization
 
-# In[681]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -137,10 +84,7 @@ ax.set(title='age', xlabel='age', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[682]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -149,10 +93,7 @@ ax.set(title='job', xlabel='job', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[683]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -161,10 +102,7 @@ ax.set(title='marital', xlabel='marital', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[684]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -173,10 +111,7 @@ ax.set(title='education', xlabel='education', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[685]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -185,10 +120,7 @@ ax.set(title='default', xlabel='default', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[686]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -197,10 +129,7 @@ ax.set(title='housing', xlabel='housing', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[687]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -209,10 +138,7 @@ ax.set(title='loan', xlabel='loan', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[688]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -221,10 +147,7 @@ ax.set(title='contact', xlabel='contact', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[689]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -233,10 +156,7 @@ ax.set(title='day', xlabel='day', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[690]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -245,10 +165,7 @@ ax.set(title='month', xlabel='month', ylabel='y')
 ax.legend()
 plt.show()
 
-
-# In[691]:
-
-
+# %%
 # Create fig, ax objects
 #fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -257,10 +174,7 @@ plt.show()
 #ax.legend()
 #plt.show()
 
-
-# In[692]:
-
-
+# %%
 # Create fig, ax objects
 fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -269,77 +183,51 @@ ax.set(title='campaign', xlabel='campaign', ylabel='y')
 ax.legend()
 plt.show()
 
-
+# %% [markdown]
 # From the countplots above, I cannot see a specific correlation between each column and y.
 # <br> I will try a Heatmap after data wrangling.</br>
 
+# %% [markdown]
 # # Data Wrangling
 
+# %% [markdown]
 # #### For column "marital", "education", "job", and "contact", I will use one-hot encoding for better performance.
 
-# In[693]:
-
-
+# %%
 df = pd.get_dummies(df, columns=["marital"], prefix="marital")
 
-
-# In[694]:
-
-
+# %%
 df = pd.get_dummies(df, columns=["education"], prefix="education")
 
-
-# In[695]:
-
-
+# %%
 df = pd.get_dummies(df, columns=["job"], prefix="job")
 
-
-# In[696]:
-
-
+# %%
 df = pd.get_dummies(df, columns=["contact"], prefix="contact")
 
-
-# In[697]:
-
-
+# %%
 df.head()
 
-
+# %% [markdown]
 # #### For columns "default", "housing", and "loan", I will replace the values to 0 for 'no' and 1 for 'yes'.
 
-# In[698]:
-
-
+# %%
 df.loc[df["default"] == "no", "default"] = 0
 df.loc[df["default"] == "yes", "default"] = 1
 
-
-# In[699]:
-
-
+# %%
 df.loc[df["housing"] == "no", "housing"] = 0
 df.loc[df["housing"] == "yes", "housing"] = 1
 
-
-# In[700]:
-
-
+# %%
 df.loc[df["loan"] == "no", "loan"] = 0
 df.loc[df["loan"] == "yes", "loan"] = 1
 
-
-# In[701]:
-
-
+# %%
 df.loc[df["y"] == "no", "y"] = 0
 df.loc[df["y"] == "yes", "y"] = 1
 
-
-# In[702]:
-
-
+# %%
 df.loc[df["month"] == "jan", "month"] = 1
 df.loc[df["month"] == "feb", "month"] = 2
 df.loc[df["month"] == "mar", "month"] = 3
@@ -353,380 +241,532 @@ df.loc[df["month"] == "oct", "month"] = 10
 df.loc[df["month"] == "nov", "month"] = 11
 df.loc[df["month"] == "dec", "month"] = 12
 
-
-# In[703]:
-
-
+# %%
 df["default"].value_counts()
 
-
-# In[704]:
-
-
+# %%
 df["housing"].value_counts()
 
-
-# In[705]:
-
-
+# %%
 df["loan"].value_counts()
 
-
-# In[706]:
-
-
+# %%
 df["y"].value_counts()
 
-
-# In[707]:
-
-
+# %%
 df["month"].value_counts()
 
-
-# In[708]:
-
-
+# %%
 # Change object types to integer types to be included when drawing a Heatmap
 df[["default","housing","loan","month","y"]] = df[["default","housing","loan","month","y"]].astype(str).astype(int)
 
-
-# In[709]:
-
-
+# %%
 df.head()
 
-
-# In[710]:
-
-
+# %%
 df.info()
 
+# %% [markdown]
+# As the numbers in column 'day' and 'month' don't mean any order or prioirty that can affect to 'y', I will drop the columns.
 
-# In[711]:
+# %%
+df.drop(columns=['day', 'month'], inplace=True)
 
+# %% [markdown]
+# 
 
+# %%
 cols = df.iloc[:,0:-1].columns
 df_int = df.iloc[:,0:-1]
 
-
-# In[712]:
-
-
+# %%
 df_int.info()
 
-
-# In[713]:
-
-
+# %%
 df_int.describe()
 
-
+# %% [markdown]
 # As the values have various ranges per column, I'm going to use Robust Scaler for preprocessing the dataset as some columns look like having some outliers, such as 'balance' and 'duration'.
 
-# In[714]:
-
-
+# %%
 from sklearn.preprocessing import RobustScaler
 
-
-# In[715]:
-
-
+# %%
 robust_scale = RobustScaler()
 df_robust = robust_scale.fit_transform(df_int)
 
-
-# In[716]:
-
-
+# %%
 df_robust = pd.DataFrame(df_robust, columns = cols)
 
-
-# In[717]:
-
-
+# %%
 df_robust.head()
 
-
-# In[718]:
-
-
+# %%
 df_robust.describe()
 
-
-# In[719]:
-
-
+# %%
 # Create correlation matrix with standard scaler
 corr = df_robust.corr()
 
-
-# In[720]:
-
-
+# %%
 #corr = df_int.corr()
 
-
-# In[721]:
-
-
+# %%
 corr['y'].sort_values(ascending=False)
 
-
-# In[722]:
-
-
+# %%
 # Draw a Heatmap with Seaborn
 plt.figure(figsize = (30, 24))
 sns.heatmap(corr, annot = True)
 plt.show()
 
-
+# %% [markdown]
 # As we can see, "duration" (last contact duration, in seconds) is quite correlated with "y" as the correlation coefficient is 0.46.
 # <br>However, all other columns are barely correlated with "y" as their absolute value of correlation coefficient is lower than 0.2.</br>
 
-# In[723]:
-
-
+# %%
 # Create a feature
 #feature = ["duration", "balance", "marital_divorced", "marital_single", "education_tertiary"]
 feature = ["duration"]
 X = np.array(df[feature])
 y = np.array(df["y"])
 
-
-# In[724]:
-
-
+# %%
 print(X.shape, y.shape)
 
-
-# In[725]:
-
-
+# %%
 print(y)
 
-
+# %% [markdown]
 # # Split train and test
 
-# In[726]:
-
-
+# %%
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=True, random_state=34)
 
+# %%
+print(X_train.shape, y_train.shape)
 
-# # Modeling
+# %% [markdown]
+# # Handling Imbalanced Data
 
-# In[727]:
+# %%
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import RepeatedStratifiedKFold
+from sklearn.model_selection import cross_validate
+from imblearn.pipeline import Pipeline
+from imblearn.combine import SMOTETomek
+from imblearn.under_sampling import TomekLinks
 
+# %%
+## No Imbalance Handling
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import RepeatedStratifiedKFold
+from sklearn.model_selection import cross_validate
 
-# Loadling libraries for K-Fold Cross Validation
+# Define model
+model_ori=RandomForestClassifier(criterion='entropy')
+# Define evaluation procedure (here we use Repeated Stratified K-Fold CV)
+cv_ori=RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# Evaluate model
+scoring=['accuracy','precision_macro','recall_macro']
+scores_ori = cross_validate(model_ori, X_train, y_train, scoring=scoring, cv=cv_ori, n_jobs=-1)
+# summarize performance
+print('Mean Accuracy: %.4f' % np.mean(scores_ori['test_accuracy']))
+print('Mean Precision: %.4f' % np.mean(scores_ori['test_precision_macro']))
+print('Mean Recall: %.4f' % np.mean(scores_ori['test_recall_macro']))
+
+# %% [markdown]
+# As we can see here, the accuracy metric score is very high, while the recall metric score is quite low. This means that the model failed to learn the minority class well, thus failed to correctly predict the minority class label.
+# As the data is imbalanced, I will apply the sampling strategy to improve the model's performance, especially the SMOTE-Tomek Links method, which is combined SMOTE (over-sampling) and Tomek's Link (under-sampling).
+
+# %%
+## With SMOTE-Tomek Links method
+from imblearn.pipeline import Pipeline
+from imblearn.combine import SMOTETomek
+from imblearn.under_sampling import TomekLinks
+
+# Define model
+model=RandomForestClassifier(criterion='entropy')
+# Define SMOTE-Tomek Links
+resample=SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+# Define pipeline
+pipeline=Pipeline(steps=[('r', resample), ('m', model)])
+# Define evaluation procedure (here we use Repeated Stratified K-Fold CV)
+cv=RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# Evaluate model
+scoring=['accuracy','precision_macro','recall_macro']
+scores = cross_validate(pipeline, X_train, y_train, scoring=scoring, cv=cv, n_jobs=-1)
+# summarize performance
+print('Mean Accuracy: %.4f' % np.mean(scores['test_accuracy']))
+print('Mean Precision: %.4f' % np.mean(scores['test_precision_macro']))
+print('Mean Recall: %.4f' % np.mean(scores['test_recall_macro']))
+
+# %% [markdown]
+# The accuracy and precision metrics might decrease, but we can see that the recall metric are higher, it means that the model performs better to correctly predict the minority class label by using SMOTE-Tomek Links to handle the imbalanced data.
+
+# %% [markdown]
+# # Detecting Outliers
+
+# %% [markdown]
+# ### Isolation Forest
+
+# %%
+from sklearn.ensemble import IsolationForest
+# identify outliers in the training dataset
+iso = IsolationForest(contamination=0.1)
+yhat = iso.fit_predict(X_train)
+
+# %%
+# select all rows that are not outliers - removing outliers
+mask = yhat != -1
+X_train, y_train = X_train[mask, :], y_train[mask]
+
+# %%
+print(X_train.shape, y_train.shape)
+
+# %% [markdown]
+# # Modeling with sampling
+
+# %%
+# Loadling libraries for K-Fold Cross Validation, Grid Search and etc.
+from sklearn.model_selection import KFold
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import cross_val_score, cross_val_predict, cross_validate
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import cross_val_score, cross_val_predict, cross_validate
-from sklearn.model_selection import KFold
 
+# %%
+# Load libraries for machine learning models
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+from sklearn.model_selection import GridSearchCV
 
+# %% [markdown]
 # ### 1. Decision Tree
 
-# In[728]:
-
-
+# %%
 # Create decision tree model
 from sklearn.tree import DecisionTreeClassifier
-dt = DecisionTreeClassifier()
+# Define model
+model = DecisionTreeClassifier()
+# Define SMOTE-Tomek Links
+resample=SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+# Define pipeline
+pipeline=Pipeline(steps=[('r', resample), ('m', model)])
+# Define evaluation procedure (here we use Repeated Stratified K-Fold CV)
+cv=RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# Evaluate model
+scoring=['accuracy','precision_macro','recall_macro']
+scores = cross_validate(pipeline, X_train, y_train, scoring=scoring, cv=cv, n_jobs=-1)
+# Save the performance results
+dt_accu = np.mean(scores['test_accuracy'])
+dt_prec = np.mean(scores['test_precision_macro'])
+dt_reca = np.mean(scores['test_recall_macro'])
 
+'''
+# %% [markdown]
+# ### 2. Logistic Regression (with Hyperparameter tuning)
 
-# ### 2. Logistic Regression
-
-# In[729]:
-
-
+# %%
 # Create logistic regression model
 from sklearn.linear_model import LogisticRegression
-lr = LogisticRegression()
+# Define model
+model = LogisticRegression()
+solvers = ['newton-cg', 'lbfgs', 'liblinear']
+penalty = ['l2']
+c_values = [100, 10, 1.0, 0.1, 0.01]
+# define grid search
+grid = dict(solver=solvers,penalty=penalty,C=c_values)
+cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+grid_search = GridSearchCV(estimator=model, param_grid=grid, n_jobs=-1, cv=cv, scoring='accuracy',error_score=0)
+grid_result = grid_search.fit(X_train, y_train,)
+# summarize results
+print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
+means = grid_result.cv_results_['mean_test_score']
+stds = grid_result.cv_results_['std_test_score']
+params = grid_result.cv_results_['params']
+for mean, stdev, param in zip(means, stds, params):
+    print("%f (%f) with: %r" % (mean, stdev, param))
+'''
 
+# %%
+# Define model with the best parameter values
+model = LogisticRegression(C=100, penalty='l2', solver='newton-cg')
+# Define SMOTE-Tomek Links
+resample=SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+# Define pipeline
+pipeline=Pipeline(steps=[('r', resample), ('m', model)])
+# Define evaluation procedure (here we use Repeated Stratified K-Fold CV)
+cv=RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# Evaluate model
+scoring=['accuracy','precision_macro','recall_macro']
+scores = cross_validate(pipeline, X_train, y_train, scoring=scoring, cv=cv, n_jobs=-1)
+# Save the performance results
+lr_accu = np.mean(scores['test_accuracy'])
+lr_prec = np.mean(scores['test_precision_macro'])
+lr_reca = np.mean(scores['test_recall_macro'])
 
-# ### 3. Random Forest
+'''
+# %% [markdown]
+# ### 3. Random Forest (with Hyperparameter tuning)
 
-# In[730]:
-
-
+# %%
 from sklearn.ensemble import RandomForestRegressor
-rf = RandomForestRegressor(n_estimators = 1000, random_state = 42)
+# Define model
+model = RandomForestRegressor(random_state = 42)
+n_estimators = [10, 100, 1000]
+max_features = ['sqrt', 'log2']
+# define grid search
+grid = dict(n_estimators=n_estimators,max_features=max_features)
+cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+grid_search = GridSearchCV(estimator=model, param_grid=grid, n_jobs=-1, cv=cv, scoring='accuracy',error_score=0)
+grid_result = grid_search.fit(X_train, y_train)
+# summarize results
+print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
+means = grid_result.cv_results_['mean_test_score']
+stds = grid_result.cv_results_['std_test_score']
+params = grid_result.cv_results_['params']
+for mean, stdev, param in zip(means, stds, params):
+    print("%f (%f) with: %r" % (mean, stdev, param))
+'''
 
+# %%
+# Define model with the best parameter values
+model = RandomForestRegressor(max_features='sqrt', n_estimators=10, random_state = 42)
+# Define SMOTE-Tomek Links
+resample=SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+# Define pipeline
+pipeline=Pipeline(steps=[('r', resample), ('m', model)])
+# Define evaluation procedure (here we use Repeated Stratified K-Fold CV)
+cv=RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# Evaluate model
+scoring=['accuracy','precision_macro','recall_macro']
+scores = cross_validate(pipeline, X_train, y_train, scoring=scoring, cv=cv, n_jobs=-1)
+# Save the performance results
+rf_accu = np.mean(scores['test_accuracy'])
+rf_prec = np.mean(scores['test_precision_macro'])
+rf_reca = np.mean(scores['test_recall_macro'])
 
-# ### 4. K-Nearest Neighbors
+'''
+# %% [markdown]
+# ### 4. K-Nearest Neighbors (with Hyperparameter tuning)
 
-# In[731]:
-
-
+# %%
 # Create K-Nearest Neighbors model
 from sklearn.neighbors import KNeighborsClassifier
-knn1 = KNeighborsClassifier(n_neighbors = 1)
-knn3 = KNeighborsClassifier(n_neighbors = 3)
-knn5 = KNeighborsClassifier(n_neighbors = 5)
+# Define model
+model = KNeighborsClassifier()
+n_neighbors = range(1, 21, 2)
+weights = ['uniform', 'distance']
+metric = ['euclidean', 'manhattan', 'minkowski']
+# define grid search
+grid = dict(n_neighbors=n_neighbors,weights=weights,metric=metric)
+cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+grid_search = GridSearchCV(estimator=model, param_grid=grid, n_jobs=-1, cv=cv, scoring='accuracy',error_score=0)
+grid_result = grid_search.fit(X_train, y_train)
+# summarize results
+print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
+means = grid_result.cv_results_['mean_test_score']
+stds = grid_result.cv_results_['std_test_score']
+params = grid_result.cv_results_['params']
+for mean, stdev, param in zip(means, stds, params):
+    print("%f (%f) with: %r" % (mean, stdev, param))
+'''
 
+# %%
+# Define model with the best parameter values
+model = KNeighborsClassifier(metric='euclidean', n_neighbors=19, weights='uniform')
+# Define SMOTE-Tomek Links
+resample=SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+# Define pipeline
+pipeline=Pipeline(steps=[('r', resample), ('m', model)])
+# Define evaluation procedure (here we use Repeated Stratified K-Fold CV)
+cv=RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# Evaluate model
+scoring=['accuracy','precision_macro','recall_macro']
+scores = cross_validate(pipeline, X_train, y_train, scoring=scoring, cv=cv, n_jobs=-1)
+# Save the performance results
+knn_accu = np.mean(scores['test_accuracy'])
+knn_prec = np.mean(scores['test_precision_macro'])
+knn_reca = np.mean(scores['test_recall_macro'])
 
+# %% [markdown]
 # ### 5. Naive Bayes
 
-# In[732]:
-
-
+# %%
 # Create Naive Bayes model
 from sklearn.naive_bayes import GaussianNB
-gnb = GaussianNB()
+# Define model
+model = GaussianNB()
+# Define SMOTE-Tomek Links
+resample=SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+# Define pipeline
+pipeline=Pipeline(steps=[('r', resample), ('m', model)])
+# Define evaluation procedure (here we use Repeated Stratified K-Fold CV)
+cv=RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# Evaluate model
+scoring=['accuracy','precision_macro','recall_macro']
+scores = cross_validate(pipeline, X_train, y_train, scoring=scoring, cv=cv, n_jobs=-1)
+# Save the performance results
+nb_accu = np.mean(scores['test_accuracy'])
+nb_prec = np.mean(scores['test_precision_macro'])
+nb_reca = np.mean(scores['test_recall_macro'])
 
+# %% [markdown]
+# ### 6. Support Vector Machines (with Hyperparameter tuning)
 
-# ### 6. Support Vector Machines
-
-# In[733]:
-
-
+'''
+# %%
 # Create SVM model
 from sklearn.svm import SVC
-svc_rbf = SVC()
-svc_sigmoid = SVC(kernel='sigmoid')
+from sklearn.model_selection import GridSearchCV
+# Define model
+model = SVC()
+kernel = ['poly', 'rbf']
+C = [10, 1.0, 0.1]
+gamma = ['scale']
+# define grid search
+grid = dict(kernel=kernel,C=C,gamma=gamma)
+cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+grid_search = GridSearchCV(estimator=model, param_grid=grid, n_jobs=-1, cv=cv, scoring='accuracy',error_score=0)
+grid_result = grid_search.fit(X_train, y_train)
+# summarize results
+print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
+means = grid_result.cv_results_['mean_test_score']
+stds = grid_result.cv_results_['std_test_score']
+params = grid_result.cv_results_['params']
+for mean, stdev, param in zip(means, stds, params):
+    print("%f (%f) with: %r" % (mean, stdev, param))
 
+# %% [markdown]
+# It took over 10 hours to complete the above SVM hyperparameter tuning
+'''
 
-# # Validation
+# %%
+# Define model with the best parameter values
+model = SVC(C=0.1, gamma='scale', kernel='rbf')
+# Define SMOTE-Tomek Links
+resample=SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+# Define pipeline
+pipeline=Pipeline(steps=[('r', resample), ('m', model)])
+# Define evaluation procedure (here we use Repeated Stratified K-Fold CV)
+cv=RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# Evaluate model
+scoring=['accuracy','precision_macro','recall_macro']
+scores = cross_validate(pipeline, X_train, y_train, scoring=scoring, cv=cv, n_jobs=-1)
+# Save the performance results
+svm_accu = np.mean(scores['test_accuracy'])
+svm_prec = np.mean(scores['test_precision_macro'])
+svm_reca = np.mean(scores['test_recall_macro'])
 
-# ### K-fold Cross Validation
+# %%
+# summarize performance
+print('Decision Tree       - Mean Accuracy: %.4f' % dt_accu + ' / ' + 'Mean Precision: %.4f' % dt_prec + ' / ' + 'Mean Recall: %.4f' % dt_reca)
+print('Logistic Regression - Mean Accuracy: %.4f' % lr_accu + ' / ' + 'Mean Precision: %.4f' % lr_prec + ' / ' + 'Mean Recall: %.4f' % lr_reca)
+print('Random Forest       - Mean Accuracy: %.4f' % rf_accu + ' / ' + 'Mean Precision: %.4f' % rf_prec + ' / ' + 'Mean Recall: %.4f' % rf_reca)
+print('K-Nearest Neighbors - Mean Accuracy: %.4f' % knn_accu + ' / ' + 'Mean Precision: %.4f' % knn_prec + ' / ' + 'Mean Recall: %.4f' % knn_reca)
+print('Naive Bayes         - Mean Accuracy: %.4f' % nb_accu + ' / ' + 'Mean Precision: %.4f' % nb_prec + ' / ' + 'Mean Recall: %.4f' % nb_reca)
+print('SVM                 - Mean Accuracy: %.4f' % svm_accu + ' / ' + 'Mean Precision: %.4f' % svm_prec + ' / ' + 'Mean Recall: %.4f' % svm_reca)
 
-# In[734]:
+# %% [markdown]
+# # Predict
 
+# %% [markdown]
+# ### Resampling data to fit
 
-scoring = "f1"
-dt_score = cross_validate(dt, X_train, y_train, scoring=scoring, return_estimator=True)
-lr_score = cross_validate(lr, X_train, y_train, scoring=scoring, return_estimator=True)
-#rf_score = cross_validate(rf, X_train, y_train, scoring=scoring, return_estimator=True)
-knn1_score = cross_validate(knn1, X_train, y_train, scoring=scoring, return_estimator=True)
-knn3_score = cross_validate(knn3, X_train, y_train, scoring=scoring, return_estimator=True)
-knn5_score = cross_validate(knn5, X_train, y_train, scoring=scoring, return_estimator=True)
-gnb_score = cross_validate(gnb, X_train, y_train, scoring=scoring, return_estimator=True)
-svc_rbf_score = cross_validate(svc_rbf, X_train, y_train, scoring=scoring, return_estimator=True)
-svc_sigmoid_score = cross_validate(svc_sigmoid, X_train, y_train, scoring=scoring, return_estimator=True)
+# %%
+resample = SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+X_train_smt, y_train_smt = resample.fit_resample(X_train, y_train)
+X_test_smt, y_test_smt = resample.fit_resample(X_test, y_test)
 
+# %% [markdown]
+# ### 1. Decision Tree
 
-# In[735]:
+# %%
+# Define model
+model = DecisionTreeClassifier()
 
+model.fit(X_train_smt, y_train_smt)
+y_pred_dt = model.predict(X_test_smt)
+print(y_pred_dt)
 
-# Print the mean score of each model
-print("Decision Tree score:", dt_score["test_score"].mean())
-print("Logistic Regression score:", lr_score["test_score"].mean())
-#print("Random Forest score:", rf_score["test_score"].mean())
-print("K-Nearst Neighbors 1 score:", knn1_score["test_score"].mean())
-print("K-Nearst Neighbors 3 score:", knn3_score["test_score"].mean())
-print("K-Nearst Neighbors 5 score:", knn5_score["test_score"].mean())
-print("Naive Bayes score:", gnb_score["test_score"].mean())
-print("Support Vector Machines with rbf score:", svc_rbf_score["test_score"].mean())
-print("Support Vector Machines with sigmoid score:", svc_sigmoid_score["test_score"].mean())
+# %% [markdown]
+# ### 2. Logistic Regression
 
+# %%
+# Define model with the best parameter values
+model = LogisticRegression(C=100, penalty='l2', solver='newton-cg')
 
-# Since Naive Bayes showed the best score, I will re-train the model and test it using test data.
+model.fit(X_train_smt, y_train_smt)
+y_pred_lr = model.predict(X_test_smt)
+print(y_pred_lr)
 
-# In[740]:
+# %% [markdown]
+# ### 3. Random Forest
 
+# %%
+# Define model with the best parameter values
+model = RandomForestRegressor(max_features='sqrt', n_estimators=10, random_state = 42)
 
-# Retrain the model and evaluate
-import sklearn
-gnb_re = sklearn.base.clone(gnb)
-gnb_re.fit(X_train, y_train)
-print("Test set Accuracy:", accuracy_score(y_test, gnb_re.predict(X_test), normalize=False))
-print("Test set RMSE:", mean_squared_error(y_test, gnb_re.predict(X_test), squared=False))
-print("Mean validation RMSE:", -gnb_score["test_score"].mean())
+model.fit(X_train_smt, y_train_smt)
+y_pred_rf = model.predict(X_test_smt)
+print(y_pred_rf)
 
+# %% [markdown]
+# ### 4. K-Nearest Neighbors
 
+# %%
+# Define model with the best parameter values
+model = KNeighborsClassifier(metric='euclidean', n_neighbors=19, weights='uniform')
+
+model.fit(X_train_smt, y_train_smt)
+y_pred_knn = model.predict(X_test_smt)
+print(y_pred_knn)
+
+# %% [markdown]
+# ### 5. Naive Beyes
+
+# %%
+# Define model with the best parameter values
+model = GaussianNB()
+
+model.fit(X_train_smt, y_train_smt)
+y_pred_nb = model.predict(X_test_smt)
+print(y_pred_nb)
+
+# %% [markdown]
+# ### 6. SVM
+
+# %%
+# Define model with the best parameter values
+model = SVC(C=0.1, gamma='scale', kernel='rbf')
+
+model.fit(X_train_smt, y_train_smt)
+y_pred_svm = model.predict(X_test_smt)
+print(y_pred_svm)
+
+# %%
+# Comparing results
+print("Test score of Decision Tree: {}".format(accuracy_score(y_test_smt, y_pred_dt)))
+print("Test score of Logistic Regression: {}".format(accuracy_score(y_test_smt, y_pred_lr)))
+print("Test score of K-Nearest Neighbors: {}".format(accuracy_score(y_test_smt, y_pred_knn)))
+print("Test score of Naive Beyes: {}".format(accuracy_score(y_test_smt, y_pred_nb)))
+print("Test score of SVM: {}".format(accuracy_score(y_test_smt, y_pred_svm)))
+
+# %% [markdown]
 # # Conclusion
 
-# - NEED TO MODIFY LATER
-# <br>We could see that the only 'duration' (last contact duration, in seconds) has positive correlation with the term deposit subscription. This means that no matter how old the customer is, where they lives, or what they do, there are more chances for the person who responds to the call longer to subscribe the term deposit.</br>
+# %% [markdown]
+# <br>1. We could see that the only 'duration' (last contact duration, in seconds) has positive correlation with the term deposit subscription. This means that no matter how old the customer is, where they lives, or what they do, there are more chances for the person who responds to the call longer to subscribe the term deposit.</br>
+# <br>2. In terms of model performance, Logistic Regression and SVM showed a similar accuracy but SVM was very slightly better.</br>
+# <br>3. I've also checked outlier to remove but the performance got worse when used the detecting outlier method, so I decided not to use it.
 
-"""
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# # Misc
-
-# In[341]:
-
-
-cv = KFold(5, shuffle=True, random_state=135)
-scores = cross_val_score(dt_clf, X_train, y_train, scoring="accuracy", cv=cv)
-print('Scores: \n{}'.format(scores))
-print('Mean of scores: \n{:.4f}'.format(scores.mean()))
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# # Stratified K-fold Cross Validation
-
-# In[1]:
-
-
-from sklearn.model_selection import StratifiedKFold
-
-
-# In[144]:
-
-
-cv_accuracy = []
-
-
-# In[145]:
-
-
-skf = StratifiedKFold(n_splits=5)
-
-
-# In[146]:
-
-
-for train_index, test_index in skf.split(X, y):
-
-    X_train, X_test = X[train_index], X[test_index]
-    y_train, y_test = y[train_index], y[test_index]
-    
-    model_LR.fit(X_train, y_train)
-    predict = model_LR.predict(X_test)
-    
-    accuracy = np.round(accuracy_score(y_test, predict), 4)
-    train_size = X_train.shape[0]
-    test_size = X_test.shape[0]
-    
-    print('CV accuracy: {:.4f}, Train data size: {}, Test data size: {}'.format(accuracy, train_size, test_size))
-    cv_accuracy.append(accuracy)
-
-
-# In[147]:
-
-
-print("Accuracy_mean: {:.4f}".format(np.mean(cv_accuracy)))
-
-
+# %% [markdown]
 # 
 
 
-"""
